@@ -38,7 +38,7 @@ export class HasuraStorageApi {
     }
   }
 
-  public setAccessToken(accessToken: string) {
+  public setAccessToken(accessToken: string | undefined) {
     this.accessToken = accessToken;
   }
 

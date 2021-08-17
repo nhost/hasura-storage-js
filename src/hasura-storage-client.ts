@@ -38,7 +38,7 @@ export class HasuraStorageClient {
     return { fileMetadata, error: null };
   }
 
-  public setAccessToken(accessToken: string): void {
+  public setAccessToken(accessToken: string | undefined): void {
     this.api.setAccessToken(accessToken);
   }
 }
