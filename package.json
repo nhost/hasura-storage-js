@@ -1,9 +1,13 @@
 {
   "name": "@nhost/hasura-storage-js",
-  "version": "1.0.0",
-  "repository": "git@github.com:nhost/hasura-storage-js.git",
+  "version": "0.0.0",
+  "description": "Hasura Storage JS",
   "license": "MIT",
+  "repository": "nhost/hasura-storage-js",
   "main": "./dist/index.js",
+  "bugs": "https://github.com/nhost/hasura-storage-js/issues",
+  "homepage": "https://nhost.io",
+  "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],

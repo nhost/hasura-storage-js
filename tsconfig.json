@@ -1,5 +1,5 @@
 {
-  "include": ["src", "test/Auth.test.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", "src/**/*.test.ts", "test"],
   "compilerOptions": {
     "lib": ["es2020", "dom"],

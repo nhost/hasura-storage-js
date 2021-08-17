@@ -4,6 +4,7 @@ import { ApiUploadParams, ApiUploadResponse } from './utils/types';
 export class HasuraStorageApi {
   private url: string;
   private httpClient: AxiosInstance;
+  private accessToken: string | undefined;
 
   constructor({ url }: { url: string }) {
     this.url = url;
@@ -26,6 +27,7 @@ export class HasuraStorageApi {
             'x-bucket-id': params.bucketId,
             'x-file-name': params.name,
             'x-file-id': params.id,
+            ...this.generateAuthHeaders(),
           },
         }
       );
@@ -34,5 +36,19 @@ export class HasuraStorageApi {
     } catch (error) {
       return { fileMetadata: null, error };
     }
+  }
+
+  public setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+  }
+
+  private generateAuthHeaders() {
+    if (!this.accessToken) {
+      return null;
+    }
+
+    return {
+      Authorization: `Bearer ${this.accessToken}`,
+    };
   }
 }

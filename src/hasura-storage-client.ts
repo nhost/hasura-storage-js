@@ -14,7 +14,7 @@ export class HasuraStorageClient {
    *
    * @example
    *
-   * upload({file})
+   * storage.upload({ file })
    *
    */
   public async upload(
@@ -36,5 +36,9 @@ export class HasuraStorageClient {
     }
 
     return { fileMetadata, error: null };
+  }
+
+  public setAccessToken(accessToken: string): void {
+    this.api.setAccessToken(accessToken);
   }
 }
