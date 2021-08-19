@@ -13,6 +13,24 @@ export type StorageUploadResponse =
   | { fileMetadata: FileResponse; error: null }
   | { fileMetadata: null; error: Error };
 
+export type StorageGetUrlParams = {
+  fileId: string;
+};
+
+export type StorageGetPresignedUrlParams = {
+  fileId: string;
+};
+
+export type StorageGetPresignedUrlResponse =
+  | { url: string; error: null }
+  | { url: null; error: Error };
+
+export type StorageDeleteParams = {
+  fileId: string;
+};
+
+export type StorageDeleteResponse = { error: Error | null };
+
 /////////////////////
 ///// API
 /////////////////////
@@ -37,3 +55,27 @@ export type ApiUploadParams = {
 export type ApiUploadResponse =
   | { fileMetadata: FileResponse; error: null }
   | { fileMetadata: null; error: Error };
+
+export type ApiGetPresignedUrlParams = {
+  fileId: string;
+};
+
+export type ApiGetPresignedUrlResponse =
+  | { url: string; error: null }
+  | { url: null; error: Error };
+
+export type ApiDeleteParams = {
+  fileId: string;
+};
+
+export type ApiDeleteResponse = { error: Error | null };
+
+/////////////////////
+///// MISC
+/////////////////////
+
+export type UploadHeaders = {
+  'x-nhost-bucket-id'?: string;
+  'x-nhost-file-id'?: string;
+  'x-nhost-file-name'?: string;
+};

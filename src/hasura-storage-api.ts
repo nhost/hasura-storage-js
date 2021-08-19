@@ -1,5 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
-import { ApiUploadParams, ApiUploadResponse } from './utils/types';
+import {
+  ApiDeleteParams,
+  ApiDeleteResponse,
+  ApiGetPresignedUrlParams,
+  ApiGetPresignedUrlResponse,
+  ApiUploadParams,
+  ApiUploadResponse,
+  UploadHeaders,
+} from './utils/types';
 
 export class HasuraStorageApi {
   private url: string;
@@ -17,20 +25,12 @@ export class HasuraStorageApi {
 
   public async upload(params: ApiUploadParams): Promise<ApiUploadResponse> {
     try {
-      const res = await this.httpClient.post(
-        '/',
-        {
-          file: params.file,
+      const res = await this.httpClient.post('/files', params.file, {
+        headers: {
+          ...this.generateUploadHeaders(params),
+          ...this.generateAuthHeaders(),
         },
-        {
-          headers: {
-            'x-bucket-id': params.bucketId,
-            'x-file-name': params.name,
-            'x-file-id': params.id,
-            ...this.generateAuthHeaders(),
-          },
-        }
-      );
+      });
 
       return { fileMetadata: res.data, error: null };
     } catch (error) {
@@ -38,8 +38,54 @@ export class HasuraStorageApi {
     }
   }
 
+  public async getPresignedUrl(
+    params: ApiGetPresignedUrlParams
+  ): Promise<ApiGetPresignedUrlResponse> {
+    try {
+      const { fileId } = params;
+      const res = await this.httpClient.get(`/files/${fileId}/presignedurl`, {
+        headers: {
+          ...this.generateAuthHeaders(),
+        },
+      });
+      return { url: res.data, error: null };
+    } catch (error) {
+      return { url: null, error };
+    }
+  }
+
+  public async delete(params: ApiDeleteParams): Promise<ApiDeleteResponse> {
+    try {
+      const { fileId } = params;
+      await this.httpClient.delete(`/files/${fileId}`, {
+        headers: {
+          ...this.generateAuthHeaders(),
+        },
+      });
+      return { error: null };
+    } catch (error) {
+      return { error };
+    }
+  }
+
   public setAccessToken(accessToken: string | undefined) {
     this.accessToken = accessToken;
+  }
+
+  private generateUploadHeaders(params: ApiUploadParams): UploadHeaders {
+    const { bucketId, name, id } = params;
+    let uploadheaders: UploadHeaders = {};
+
+    if (bucketId) {
+      uploadheaders['x-nhost-bucket-id'] = bucketId;
+    }
+    if (id) {
+      uploadheaders['x-nhost-file-id'] = id;
+    }
+    if (name) {
+      uploadheaders['x-nhost-file-name'] = name;
+    }
+    return uploadheaders;
   }
 
   private generateAuthHeaders() {

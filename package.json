@@ -4,10 +4,10 @@
   "description": "Hasura Storage JS",
   "license": "MIT",
   "repository": "nhost/hasura-storage-js",
-  "main": "./dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "bugs": "https://github.com/nhost/hasura-storage-js/issues",
   "homepage": "https://nhost.io",
-  "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],
@@ -15,7 +15,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "test": "jest --runInBand --coverage"
   },
   "dependencies": {

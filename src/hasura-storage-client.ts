@@ -1,10 +1,20 @@
 import { HasuraStorageApi } from './hasura-storage-api';
-import { StorageUploadParams, StorageUploadResponse } from './utils/types';
+import {
+  StorageDeleteParams,
+  StorageDeleteResponse,
+  StorageGetPresignedUrlParams,
+  StorageGetPresignedUrlResponse,
+  StorageGetUrlParams,
+  StorageUploadParams,
+  StorageUploadResponse,
+} from './utils/types';
 
 export class HasuraStorageClient {
+  private url: string;
   private api: HasuraStorageApi;
 
   constructor({ url }: { url: string }) {
+    this.url = url;
     this.api = new HasuraStorageApi({ url });
   }
 
@@ -36,6 +46,66 @@ export class HasuraStorageClient {
     }
 
     return { fileMetadata, error: null };
+  }
+
+  /**
+   *
+   * Use `.getUrl` to direct file URL to a file.
+   *
+   * @example
+   *
+   * storage.getUrl({ fileId: 'uuid' })
+   *
+   */
+  public getUrl(params: StorageGetUrlParams): string {
+    const { fileId } = params;
+    return `${this.url}/files/${fileId}`;
+  }
+
+  /**
+   *
+   * Use `.getPresignedUrl` to get a presigned URL to a file.
+   *
+   * @example
+   *
+   * storage.getPresignedUrl({ fileId: 'uuid' })
+   *
+   *
+   */
+  public async getPresignedUrl(
+    params: StorageGetPresignedUrlParams
+  ): Promise<StorageGetPresignedUrlResponse> {
+    const { url, error } = await this.api.getPresignedUrl(params);
+    if (error) {
+      return { url: null, error };
+    }
+
+    if (!url) {
+      return { url: null, error: new Error('Invalid file id') };
+    }
+
+    return { url, error: null };
+  }
+
+  /**
+   *
+   * Use `.delete` to delete a file.
+   *
+   * @example
+   *
+   * storage.delete({ fileId: 'uuid' })
+   *
+   *
+   */
+  public async delete(
+    params: StorageDeleteParams
+  ): Promise<StorageDeleteResponse> {
+    const { error } = await this.api.delete(params);
+    if (error) {
+      return { error };
+    }
+
+    return { error: null };
   }
 
   public setAccessToken(accessToken: string | undefined): void {
