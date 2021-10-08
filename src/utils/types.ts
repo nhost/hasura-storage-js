@@ -22,7 +22,7 @@ export type StorageGetPresignedUrlParams = {
 };
 
 export type StorageGetPresignedUrlResponse =
-  | { url: string; error: null }
+  | { url: { url: string; expiration: number }; error: null }
   | { url: null; error: Error };
 
 export type StorageDeleteParams = {
@@ -61,7 +61,7 @@ export type ApiGetPresignedUrlParams = {
 };
 
 export type ApiGetPresignedUrlResponse =
-  | { url: string; error: null }
+  | { url: { url: string; expiration: number }; error: null }
   | { url: null; error: Error };
 
 export type ApiDeleteParams = {
