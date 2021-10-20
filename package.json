@@ -1,6 +1,6 @@
 {
   "name": "@nhost/hasura-storage-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Hasura Storage JS",
   "license": "MIT",
   "repository": "nhost/hasura-storage-js",
