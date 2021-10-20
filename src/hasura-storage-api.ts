@@ -48,9 +48,9 @@ export class HasuraStorageApi {
           ...this.generateAuthHeaders(),
         },
       });
-      return { url: res.data, error: null };
+      return { presignedUrl: res.data, error: null };
     } catch (error) {
-      return { url: null, error };
+      return { presignedUrl: null, error };
     }
   }
 

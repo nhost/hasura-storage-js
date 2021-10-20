@@ -75,16 +75,16 @@ export class HasuraStorageClient {
   public async getPresignedUrl(
     params: StorageGetPresignedUrlParams
   ): Promise<StorageGetPresignedUrlResponse> {
-    const { url, error } = await this.api.getPresignedUrl(params);
+    const { presignedUrl, error } = await this.api.getPresignedUrl(params);
     if (error) {
-      return { url: null, error };
+      return { presignedUrl: null, error };
     }
 
-    if (!url) {
-      return { url: null, error: new Error('Invalid file id') };
+    if (!presignedUrl) {
+      return { presignedUrl: null, error: new Error('Invalid file id') };
     }
 
-    return { url, error: null };
+    return { presignedUrl, error: null };
   }
 
   /**
