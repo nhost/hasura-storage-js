@@ -9,7 +9,8 @@
   "bugs": "https://github.com/nhost/hasura-storage-js/issues",
   "homepage": "https://nhost.io",
   "files": [
-    "/dist"
+    "dist",
+    "src"
   ],
   "publishConfig": {
     "access": "public"
