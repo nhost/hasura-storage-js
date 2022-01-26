@@ -1,13 +1,24 @@
 {
   "name": "@nhost/hasura-storage-js",
   "version": "0.0.6",
-  "description": "Hasura Storage JS",
+  "description": "Hasura-storage client",
   "license": "MIT",
-  "repository": "nhost/hasura-storage-js",
+  "keywords": [
+    "nhost",
+    "hasura",
+    "storage",
+    "graphql",
+    "s3"
+  ],
+  "author": "Nhost",
+  "homepage": "https://nhost.io",
+  "bugs": "https://github.com/nhost/hasura-storage-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nhost/hasura-storage-js.git"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "bugs": "https://github.com/nhost/hasura-storage-js/issues",
-  "homepage": "https://nhost.io",
   "files": [
     "dist",
     "src"
